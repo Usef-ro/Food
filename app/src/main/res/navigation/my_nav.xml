@@ -9,15 +9,23 @@
         android:id="@+id/favoriteFragment"
         android:name="com.example.food.favoriteFragment"
         android:label="fragment_favorite"
-        tools:layout="@layout/fragment_favorite" />
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_recipedFragment"
+            app:destination="@id/recipedFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recipedFragment"
         android:name="com.example.food.recipedFragment"
         android:label="fragment_reciped"
-        tools:layout="@layout/fragment_reciped" />
+        tools:layout="@layout/fragment_reciped" >
+        <action
+            android:id="@+id/action_recipedFragment_to_blankFragment"
+            app:destination="@id/foodFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/blankFragment"
+        android:id="@+id/foodFragment"
         android:name="com.example.food.foodFragment"
-        android:label="fragment_blank"
-        tools:layout="@layout/fragment_blank" />
+        android:label="foodFragment"
+        tools:layout="@layout/fragment_food" />
 </navigation>

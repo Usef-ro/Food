@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -20,8 +21,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-         navController=findNavController(R.id.navFragment)
+        val navHostFragment=supportFragmentManager.findFragmentById(R.id.navFragment) as NavHostFragment
+         navController= navHostFragment.navController
 
         val appBarConfig= AppBarConfiguration(setOf(R.id.recipedFragment,R.id.favoriteFragment,R.id.foodFragment))
 

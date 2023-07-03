@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.example.food.favoriteFragment"
+        android:name="com.example.food.ui.fragment.favorite.favoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/recipedFragment"
-        android:name="com.example.food.recipedFragment"
+        android:name="com.example.food.ui.fragment.reciped.recipedFragment"
         android:label="fragment_reciped"
         tools:layout="@layout/fragment_reciped" >
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/foodFragment"
-        android:name="com.example.food.foodFragment"
+        android:name="com.example.food.ui.fragment.foods.foodFragment"
         android:label="foodFragment"
         tools:layout="@layout/fragment_food" />
 </navigation>

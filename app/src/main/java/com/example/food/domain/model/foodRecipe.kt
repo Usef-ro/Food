@@ -1,5 +1,8 @@
 package com.example.food.domain.model
 
 data class foodRecipe (
-    val result:List<String>
+    val result:List<Result>
         )
+data class Result(
+    val a:String
+)

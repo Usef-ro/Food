@@ -9,7 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
-import com.example.food.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.food.databinding.FragmentRecipedBinding
 import com.example.food.ui.adapter.adapterRecipe
 import com.example.food.util.NetworkResult
@@ -21,7 +22,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class recipedFragment : Fragment() {
 
     val mAdapter by lazy { adapterRecipe() }
-    lateinit var mianViewModel:MainViewModel
+
+    private lateinit var mainViewModel:MainViewModel
+
+
     private var _binding: FragmentRecipedBinding? = null
     private val binding get() = _binding!!
 
@@ -40,7 +44,7 @@ class recipedFragment : Fragment() {
         _binding = FragmentRecipedBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        mianViewModel=ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        mainViewModel=ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         initRecy()
         requestApiData()
         return view
@@ -54,13 +58,16 @@ class recipedFragment : Fragment() {
         binding.shimmerRecyclerView.hideShimmer()
     }
     fun initRecy(){
+        binding.recyclerViewRecipes.hasFixedSize()
+        binding.recyclerViewRecipes.layoutManager=LinearLayoutManager(requireContext())
         binding.recyclerViewRecipes.adapter=mAdapter
+
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun requestApiData(){
-        mianViewModel.getRecipes(applyQueries())
-        mianViewModel.recipesRespose.observe(viewLifecycleOwner,{res->
+        mainViewModel.getRecipes(applyQueries())
+        mainViewModel.recipesResponse.observe(viewLifecycleOwner,{ res->
             when(res){
                 is NetworkResult.Success->{
                     hideShimmer()
@@ -78,16 +85,16 @@ class recipedFragment : Fragment() {
     }
 
     fun applyQueries():HashMap<String,String>{
-        val quer= HashMap<String, String>()
+        val query= HashMap<String, String>()
 
-        quer["number"]="50"
-        quer["apiKey"]=API_KEY
-        quer["type"]="snap"
-        quer["diet"]="vegan"
-        quer[""]=""
-        quer[""]=""
+        query["number"]="50"
+        query["apiKey"]=API_KEY
+        query["type"]="finger"
+        query["diet"]="vegan"
+        query["addRecipeInformation"]="true"
+//        query["fillIngredients"]="true"
 
-        return quer
+        return query
     }
 
     override fun onDestroyView() {

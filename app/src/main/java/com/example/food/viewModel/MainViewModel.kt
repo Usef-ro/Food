@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -14,18 +15,16 @@ import com.example.food.domain.model.foodRecipe
 import com.example.food.util.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.Response
-import retrofit2.http.QueryMap
 import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject
 constructor(
-    val repository: Repository
-    ,app:Application) :AndroidViewModel(app) {
+    private val repository: Repository
+    , app:Application) :AndroidViewModel(app) {
 
-    var recipesRespose:MutableLiveData<NetworkResult<foodRecipe>> = MutableLiveData()
+    var recipesResponse:MutableLiveData<NetworkResult<foodRecipe>> = MutableLiveData()
     @RequiresApi(Build.VERSION_CODES.M)
     fun getRecipes(queryMap: Map<String,String>)=viewModelScope.launch {
         getRecipesSafeCall(queryMap)
@@ -34,24 +33,24 @@ constructor(
     @RequiresApi(Build.VERSION_CODES.M)
     private suspend fun getRecipesSafeCall(queryMap: Map<String, String>) {
 
-        recipesRespose.value=NetworkResult.Loading()
+        recipesResponse.value=NetworkResult.Loading()
 
         if(hasInternetConnection()){
 
             try{
                 val response=repository.remote.getRecipes(queryMap)
-                recipesRespose.value=handleFoodRecipesResponce(response)
+                recipesResponse.value=handleFoodRecipesResponse(response)
             }catch (e:Exception){
-
-                recipesRespose.value=NetworkResult.Error("Recipes not Found")
+                Log.e("getRecipesSafeCall ",""+e.message)
+                recipesResponse.value=NetworkResult.Error("Recipes not Found")
             }
         }else{
 
-            recipesRespose.value=NetworkResult.Error("No Internet Connection")
+            recipesResponse.value=NetworkResult.Error("No Internet Connection")
         }
     }
 
-    private fun handleFoodRecipesResponce(repository: retrofit2.Response<foodRecipe>): NetworkResult<foodRecipe>? {
+    private fun handleFoodRecipesResponse(repository: retrofit2.Response<foodRecipe>): NetworkResult<foodRecipe> {
 
         when{
             repository.message().toString().contains("timeout")->{
@@ -60,7 +59,7 @@ constructor(
             repository.code()==402->{
                 return NetworkResult.Error("API Key Limited.")
             }
-            repository.body()!!.result.isNullOrEmpty()->{
+            repository.body()!!.result.isEmpty()->{
                 return NetworkResult.Error("Recipes not found")
             }
             repository.isSuccessful->{

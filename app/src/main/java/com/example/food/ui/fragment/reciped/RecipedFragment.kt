@@ -16,6 +16,7 @@ import com.example.food.ui.adapter.adapterRecipe
 import com.example.food.util.NetworkResult
 import com.example.food.util.constants.API_KEY
 import com.example.food.viewModel.MainViewModel
+import com.example.food.viewModel.recipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,6 +25,7 @@ class recipedFragment : Fragment() {
     val mAdapter by lazy { adapterRecipe() }
 
     private lateinit var mainViewModel:MainViewModel
+    private lateinit var recipesViewModel:recipesViewModel
 
 
     private var _binding: FragmentRecipedBinding? = null
@@ -66,7 +68,7 @@ class recipedFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun requestApiData(){
-        mainViewModel.getRecipes(applyQueries())
+        mainViewModel.getRecipes(recipesViewModel.applyQueries())
         mainViewModel.recipesResponse.observe(viewLifecycleOwner,{ res->
             when(res){
                 is NetworkResult.Success->{
@@ -84,18 +86,6 @@ class recipedFragment : Fragment() {
         })
     }
 
-    fun applyQueries():HashMap<String,String>{
-        val query= HashMap<String, String>()
-
-        query["number"]="50"
-        query["apiKey"]=API_KEY
-        query["type"]="finger"
-        query["diet"]="vegan"
-        query["addRecipeInformation"]="true"
-//        query["fillIngredients"]="true"
-
-        return query
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

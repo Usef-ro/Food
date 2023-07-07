@@ -7,6 +7,9 @@ object constants {
     const val RICEPS_URL="/recipes/complexSearch"
     const val API_KEY="9d6d4299545d4f239b3585cd578ca39c"
 
+    const val DATABASE_NAME="recipes_database"
+    const val RECIPES_TABLE="recipes_table"
+
     fun que():HashMap<String,String>{
         val query= HashMap<String, String>()
 

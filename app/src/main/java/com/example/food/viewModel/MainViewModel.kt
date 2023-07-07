@@ -8,12 +8,16 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.food.domain.Repository
+import com.example.food.domain.database.recipesEntity
 import com.example.food.domain.model.foodRecipe
 import com.example.food.util.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
@@ -23,6 +27,14 @@ class MainViewModel @Inject
 constructor(
     private val repository: Repository
     , app:Application) :AndroidViewModel(app) {
+
+    val readRecipes:LiveData<List<recipesEntity>> =repository.local.readDatabase().asLiveData(  )
+
+
+    fun insertRecipes(recipesEntity: recipesEntity)=
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.local.insertRecipes(recipesEntity)
+        }
 
     var recipesResponse:MutableLiveData<NetworkResult<foodRecipe>> = MutableLiveData()
     @RequiresApi(Build.VERSION_CODES.M)
@@ -40,6 +52,11 @@ constructor(
             try{
                 val response=repository.remote.getRecipes(queryMap)
                 recipesResponse.value=handleFoodRecipesResponse(response)
+
+                val foodRecipe=recipesResponse.value!!.data
+                if(foodRecipe!=null){
+                    offlineCacheRecipes(foodRecipe)
+                }
             }catch (e:Exception){
                 Log.e("getRecipesSafeCall ",""+e.message)
                 recipesResponse.value=NetworkResult.Error("Recipes not Found")
@@ -48,6 +65,12 @@ constructor(
 
             recipesResponse.value=NetworkResult.Error("No Internet Connection")
         }
+    }
+
+    private fun offlineCacheRecipes(foodRecipe: foodRecipe) {
+
+        val recipesEntity=recipesEntity(foodRecipe)
+        insertRecipes(recipesEntity)
     }
 
     private fun handleFoodRecipesResponse(repository: retrofit2.Response<foodRecipe>): NetworkResult<foodRecipe> {

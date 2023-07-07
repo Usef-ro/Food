@@ -26,7 +26,8 @@ import javax.inject.Inject
 class MainViewModel @Inject
 constructor(
     private val repository: Repository
-    , app:Application) :AndroidViewModel(app) {
+    , app:Application
+) :AndroidViewModel(app) {
 
     val readRecipes:LiveData<List<recipesEntity>> =repository.local.readDatabase().asLiveData(  )
 
@@ -71,6 +72,7 @@ constructor(
 
         val recipesEntity=recipesEntity(foodRecipe)
         insertRecipes(recipesEntity)
+
     }
 
     private fun handleFoodRecipesResponse(repository: retrofit2.Response<foodRecipe>): NetworkResult<foodRecipe> {

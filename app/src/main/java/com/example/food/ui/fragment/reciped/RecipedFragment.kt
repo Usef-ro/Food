@@ -11,11 +11,9 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.food.databinding.FragmentRecipedBinding
 import com.example.food.ui.adapter.adapterRecipe
 import com.example.food.util.NetworkResult
-import com.example.food.util.constants.API_KEY
 import com.example.food.util.observeOnce
 import com.example.food.viewModel.MainViewModel
 import com.example.food.viewModel.recipesViewModel
@@ -49,10 +47,12 @@ class recipedFragment : Fragment() {
         _binding = FragmentRecipedBinding.inflate(inflater, container, false)
         val view = binding.root
         binding.lifecycleOwner=this
-        binding.mainViewModel=mainViewModel
+
         mainViewModel=ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         recipesViewModell=ViewModelProvider(requireActivity()).get(recipesViewModel::class.java)
-        initRecy()
+
+        binding.mainViewModel=mainViewModel
+        initRacy()
         requestApiData()
         readDatabase()
         return view
@@ -74,7 +74,7 @@ class recipedFragment : Fragment() {
     }
 fun loadDataFromCache(){
     lifecycleScope.launch {
-        mainViewModel.readRecipes.observe(viewLifecycleOwner){data->
+        mainViewModel.readRecipes.observeOnce(viewLifecycleOwner){data->
             mAdapter.setData(data[0].foodRecipe)
         }
     }
@@ -85,7 +85,7 @@ fun loadDataFromCache(){
     private fun hideShimmer() {
         binding.shimmerRecyclerView.hideShimmer()
     }
-    fun initRecy(){
+    private fun initRacy(){
         binding.recyclerViewRecipes.hasFixedSize()
         binding.recyclerViewRecipes.layoutManager=LinearLayoutManager(requireContext())
         binding.recyclerViewRecipes.adapter=mAdapter

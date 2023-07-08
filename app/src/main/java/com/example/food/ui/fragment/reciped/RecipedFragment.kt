@@ -10,7 +10,9 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.food.R
 import com.example.food.databinding.FragmentRecipedBinding
 import com.example.food.ui.adapter.adapterRecipe
 import com.example.food.util.NetworkResult
@@ -55,6 +57,10 @@ class recipedFragment : Fragment() {
         initRacy()
         requestApiData()
         readDatabase()
+
+        binding.btnFloating.setOnClickListener {
+            findNavController().navigate(R.id.action_recipedFragment_to_blankBottomSheet2)
+        }
         return view
 
     }

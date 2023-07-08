@@ -9,23 +9,35 @@
         android:id="@+id/favoriteFragment"
         android:name="com.example.food.ui.fragment.favorite.favoriteFragment"
         android:label="fragment_favorite"
-        tools:layout="@layout/fragment_favorite" >
-        <action
-            android:id="@+id/action_favoriteFragment_to_recipedFragment"
-            app:destination="@id/recipedFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_favorite" />
     <fragment
         android:id="@+id/recipedFragment"
         android:name="com.example.food.ui.fragment.reciped.recipedFragment"
         android:label="fragment_reciped"
         tools:layout="@layout/fragment_reciped" >
         <action
-            android:id="@+id/action_recipedFragment_to_blankFragment"
+            android:id="@+id/action_recipedFragment_to_foodFragment"
             app:destination="@id/foodFragment" />
+        <action
+            android:id="@+id/action_recipedFragment_to_blankBottomSheet2"
+            app:destination="@id/blankBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/foodFragment"
         android:name="com.example.food.ui.fragment.foods.foodFragment"
         android:label="foodFragment"
-        tools:layout="@layout/fragment_food" />
+        tools:layout="@layout/fragment_food" >
+        <action
+            android:id="@+id/action_foodFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/blankBottomSheet"
+        android:name="com.example.food.ui.fragment.reciped.BlankBottomSheet"
+        android:label="fragment_blank_bottom_sheet"
+        tools:layout="@layout/fragment_blank_bottom_sheet" >
+        <action
+            android:id="@+id/action_blankBottomSheet_to_recipedFragment2"
+            app:destination="@id/recipedFragment" />
+    </dialog>
 </navigation>

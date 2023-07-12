@@ -85,6 +85,7 @@ fun loadDataFromCache(){
         }
     }
 }
+
     private fun showShimmer() {
         binding.shimmerRecyclerView.showShimmer()
     }

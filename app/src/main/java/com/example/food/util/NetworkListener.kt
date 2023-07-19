@@ -29,8 +29,6 @@ class NetworkListener:ConnectivityManager.NetworkCallback() {
                     return@forEach
                 }
             }
-
-
         }
         isNetworkAvailable.value=isConnected
         return isNetworkAvailable

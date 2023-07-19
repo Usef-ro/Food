@@ -2,6 +2,7 @@ package com.example.food.ui.fragment.reciped
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,14 +17,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.food.R
 import com.example.food.databinding.FragmentRecipedBinding
 import com.example.food.ui.adapter.adapterRecipe
+import com.example.food.util.NetworkListener
 import com.example.food.util.NetworkResult
 import com.example.food.util.observeOnce
 import com.example.food.viewModel.MainViewModel
 import com.example.food.viewModel.recipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
+@ExperimentalCoroutinesApi
 class recipedFragment : Fragment() {
 
 
@@ -33,7 +37,7 @@ class recipedFragment : Fragment() {
 
     private lateinit var mainViewModel:MainViewModel
     private lateinit var recipesViewModell:recipesViewModel
-
+    lateinit var  networkListener:NetworkListener
 
     private var _binding: FragmentRecipedBinding? = null
     private val binding get() = _binding!!
@@ -62,8 +66,23 @@ class recipedFragment : Fragment() {
         requestApiData()
         readDatabase()
 
+        lifecycleScope.launch {
+            networkListener=NetworkListener()
+            networkListener.checkNetworkAvailability(requireContext())
+                .collect{status->{
+                    Log.e("network listener",status.toString())
+                    recipesViewModell.network=status
+                    recipesViewModell.showNetworkStatus()
+                }}
+        }
+
         binding.btnFloating.setOnClickListener {
-            findNavController().navigate(R.id.action_recipedFragment_to_blankBottomSheet2)
+            if(recipesViewModell.network){
+                findNavController().navigate(R.id.action_recipedFragment_to_blankBottomSheet2)
+
+            }else{
+recipesViewModell.showNetworkStatus()
+            }
         }
         return view
 

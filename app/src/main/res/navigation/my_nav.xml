@@ -21,6 +21,10 @@
         <action
             android:id="@+id/action_recipedFragment_to_blankBottomSheet2"
             app:destination="@id/blankBottomSheet" />
+        <argument
+            android:name="backToHome"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/foodFragment"

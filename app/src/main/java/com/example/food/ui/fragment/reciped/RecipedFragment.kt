@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.food.R
 import com.example.food.databinding.FragmentRecipedBinding
@@ -24,6 +25,9 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class recipedFragment : Fragment() {
+
+
+    val args by navArgs<recipedFragmentArgs>()
 
     val mAdapter by lazy { adapterRecipe() }
 
@@ -69,7 +73,7 @@ class recipedFragment : Fragment() {
     private fun readDatabase() {
      lifecycleScope.launch {
          mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { data ->
-             if (data.isNotEmpty()) {
+             if (data.isNotEmpty() && !args.backToHome) {
                  mAdapter.setData(data[0].foodRecipe)
                  hideShimmer()
              }else{

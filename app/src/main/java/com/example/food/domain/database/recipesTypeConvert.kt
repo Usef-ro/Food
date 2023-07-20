@@ -8,18 +8,18 @@ import com.google.gson.reflect.TypeToken
 
 class recipesTypeConvert {
 
-    var gson=Gson()
+    var gson = Gson()
 
 
     @TypeConverter
-    fun foodRecipeToString(foodRecipe: foodRecipe):String{
+    fun foodRecipeToString(foodRecipe: foodRecipe): String {
         return gson.toJson(foodRecipe)
     }
 
     @TypeConverter
-    fun stringTofoodRecipe(data:String):foodRecipe{
+    fun stringTofoodRecipe(data: String): foodRecipe {
 
-        val listType=object:TypeToken<foodRecipe>(){}.type
-        return gson.fromJson(data,listType)
+        val listType = object : TypeToken<foodRecipe>() {}.type
+        return gson.fromJson(data, listType)
     }
 }

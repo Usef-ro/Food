@@ -1,12 +1,10 @@
 package com.example.food.di
 
-import com.example.food.domain.model.foodRecipe
 import com.example.food.domain.repository.IfoodRecipeApi
 import com.example.food.util.constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -22,23 +20,23 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideHttpClient():OkHttpClient{
-        return  OkHttpClient.Builder().readTimeout(15,TimeUnit.SECONDS)
-            .connectTimeout(15,TimeUnit.SECONDS).build()
+    fun provideHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder().readTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(15, TimeUnit.SECONDS).build()
     }
 
     @Singleton
     @Provides
-    fun provideConvertFactory():GsonConverterFactory{
+    fun provideConvertFactory(): GsonConverterFactory {
         return GsonConverterFactory.create()
     }
 
     @Singleton
     @Provides
     fun provideRetrofitInstance(
-        okHttpClient:OkHttpClient,
+        okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
-    ):Retrofit{
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
@@ -49,7 +47,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideApiSErvice(retorift:Retrofit): IfoodRecipeApi{
+    fun provideApiSErvice(retorift: Retrofit): IfoodRecipeApi {
         return retorift.create(IfoodRecipeApi::class.java)
     }
 }

@@ -49,13 +49,13 @@ class recipesBinding {
 
 
         // TEMPORARLLY
-        @BindingAdapter("readApiResponse3","readDatabase3", requireAll = true)
+        @BindingAdapter("readApiResponse3", "readDatabase3", requireAll = true)
         @JvmStatic
         fun errorRecy(
             view: View,
             apiRes: NetworkResult<foodRecipe?>,
             database: List<recipesEntity>?
-        ){
+        ) {
             if (apiRes is NetworkResult.Error && database.isNullOrEmpty()) {
                 view.visibility = View.INVISIBLE
             }

@@ -1,14 +1,16 @@
 package com.example.food.domain.model
+
 import com.google.gson.annotations.SerializedName
 
 
-data class foodRecipe (
+data class foodRecipe(
     val number: Int,
     val offset: Int,
     @SerializedName("results")
     val result: List<Result>,
     val totalResults: Int
-        )
+)
+
 data class Result(
     @SerializedName("aggregateLikes")
     val aggregateLikes: Int,

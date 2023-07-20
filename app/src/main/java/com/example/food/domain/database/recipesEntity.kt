@@ -11,5 +11,5 @@ class recipesEntity(
     var foodRecipe: foodRecipe
 ) {
     @PrimaryKey(autoGenerate = false)
-    var id:Int=0
+    var id: Int = 0
 }

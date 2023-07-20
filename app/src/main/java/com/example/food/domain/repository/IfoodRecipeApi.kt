@@ -10,7 +10,7 @@ interface IfoodRecipeApi {
 
     @GET(RICEPS_URL)
     suspend fun getRecpes(
-            @QueryMap queries:Map<String,String>
+        @QueryMap queries: Map<String, String>
     ): Response<foodRecipe>
 
 }

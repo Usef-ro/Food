@@ -18,12 +18,14 @@ https://github.com/omtodkar/ShimmerRecyclerView/blob/master/LICENSE.md
 */
 package com.example.shimmerRecyclerView;
 
+import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import com.example.food.R;
+
 import androidx.annotation.CallSuper;
 import androidx.annotation.IntDef;
 import androidx.annotation.LayoutRes;
@@ -34,15 +36,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.food.R;
+import com.example.shimmerRecyclerView.ShimmerAdapter.ItemViewType;
 import com.facebook.shimmer.Shimmer;
 import com.facebook.shimmer.Shimmer.Direction;
 import com.facebook.shimmer.Shimmer.Shape;
 
-import com.example.shimmerRecyclerView.ShimmerAdapter.ItemViewType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 
 public final class ShimmerRecyclerView extends RecyclerView {
 

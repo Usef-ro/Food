@@ -3,12 +3,12 @@ package com.example.food.ui.fragment.reciped
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -35,9 +35,9 @@ class recipedFragment : Fragment() {
 
     val mAdapter by lazy { adapterRecipe() }
 
-    private lateinit var mainViewModel:MainViewModel
-    private lateinit var recipesViewModell:recipesViewModel
-    lateinit var  networkListener:NetworkListener
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var recipesViewModell: recipesViewModel
+    lateinit var networkListener: NetworkListener
 
     private var _binding: FragmentRecipedBinding? = null
     private val binding get() = _binding!!
@@ -47,7 +47,6 @@ class recipedFragment : Fragment() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,32 +55,34 @@ class recipedFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentRecipedBinding.inflate(inflater, container, false)
         val view = binding.root
-        binding.lifecycleOwner=this
+        binding.lifecycleOwner = this
 
-        mainViewModel=ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
-        recipesViewModell=ViewModelProvider(requireActivity()).get(recipesViewModel::class.java)
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        recipesViewModell = ViewModelProvider(requireActivity()).get(recipesViewModel::class.java)
 
-        binding.mainViewModel=mainViewModel
+        binding.mainViewModel = mainViewModel
         initRacy()
         requestApiData()
         readDatabase()
 
         lifecycleScope.launch {
-            networkListener=NetworkListener()
+            networkListener = NetworkListener()
             networkListener.checkNetworkAvailability(requireContext())
-                .collect{status->{
-                    Log.e("network listener",status.toString())
-                    recipesViewModell.network=status
-                    recipesViewModell.showNetworkStatus()
-                }}
+                .collect { status ->
+                    {
+                        Log.e("network listener", status.toString())
+                        recipesViewModell.network = status
+                        recipesViewModell.showNetworkStatus()
+                    }
+                }
         }
 
         binding.btnFloating.setOnClickListener {
-            if(recipesViewModell.network){
+            if (recipesViewModell.network) {
                 findNavController().navigate(R.id.action_recipedFragment_to_blankBottomSheet2)
 
-            }else{
-recipesViewModell.showNetworkStatus()
+            } else {
+                recipesViewModell.showNetworkStatus()
             }
         }
         return view
@@ -90,57 +91,65 @@ recipesViewModell.showNetworkStatus()
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun readDatabase() {
-     lifecycleScope.launch {
-         mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { data ->
-             if (data.isNotEmpty() && !args.backToHome) {
-                 mAdapter.setData(data[0].foodRecipe)
-                 hideShimmer()
-             }else{
-                 requestApiData()
-             }
-         }
-     }
-    }
-fun loadDataFromCache(){
-    lifecycleScope.launch {
-        mainViewModel.readRecipes.observeOnce(viewLifecycleOwner){data->
-            mAdapter.setData(data[0].foodRecipe)
+        lifecycleScope.launch {
+            mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { data ->
+                if (data.isNotEmpty() && !args.backToHome) {
+                    mAdapter.setData(data[0].foodRecipe)
+                    hideShimmer()
+                } else {
+                    requestApiData()
+                }
+            }
         }
     }
+
+    fun loadDataFromCache() {
+        lifecycleScope.launch {
+            mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { data ->
+if(data.isNotEmpty()){
+    mAdapter.setData(data[0].foodRecipe)
 }
+            }
+        }
+    }
 
     private fun showShimmer() {
         binding.shimmerRecyclerView.showShimmer()
     }
+
     private fun hideShimmer() {
         binding.shimmerRecyclerView.hideShimmer()
     }
-    private fun initRacy(){
+
+    private fun initRacy() {
         binding.recyclerViewRecipes.hasFixedSize()
-        binding.recyclerViewRecipes.layoutManager=LinearLayoutManager(requireContext())
-        binding.recyclerViewRecipes.adapter=mAdapter
+        binding.recyclerViewRecipes.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewRecipes.adapter = mAdapter
 
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    fun requestApiData(){
+    fun requestApiData() {
         mainViewModel.getRecipes(recipesViewModell.applyQueries())
-        mainViewModel.recipesResponse.observe(viewLifecycleOwner,{ res->
-            when(res){
-                is NetworkResult.Success->{
+        mainViewModel.recipesResponse.observe(viewLifecycleOwner) { res ->
+            when (res) {
+                is NetworkResult.Success -> {
                     hideShimmer()
                     res.data?.let { mAdapter.setData(it) }
                 }
-                is NetworkResult.Error->{
+
+                is NetworkResult.Error -> {
                     hideShimmer()
                     loadDataFromCache()
-                    Toast.makeText(requireContext(),res.message.toString(),Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), res.message.toString(), Toast.LENGTH_SHORT)
+                        .show()
                 }
-                is NetworkResult.Loading->{
+
+                is NetworkResult.Loading -> {
                     showShimmer()
                 }
             }
-        })
+        }
     }
 
 

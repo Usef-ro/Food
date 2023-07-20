@@ -21,14 +21,15 @@ package com.example.shimmerRecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.example.food.R;
+
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.food.R;
+import com.example.shimmerRecyclerView.ShimmerRecyclerView.LayoutType;
 import com.facebook.shimmer.Shimmer;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.example.shimmerRecyclerView.ShimmerRecyclerView.LayoutType;
 
 public final class ShimmerAdapter extends RecyclerView.Adapter<ShimmerViewHolder> {
 

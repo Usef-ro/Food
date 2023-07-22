@@ -3,6 +3,7 @@ package com.example.food.viewModel
 import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.food.domain.database.DataStoreRepository
 import com.example.food.util.constants
@@ -31,6 +32,14 @@ class recipesViewModel @Inject constructor(
 
     var network = false
     val readMealAndDietType = dataStoreRepository.readMealAndDietType
+    var backOnline=dataStoreRepository.readBackOnline.asLiveData()
+    fun saveBackOnline(backOnline:Boolean){
+
+        viewModelScope.launch(Dispatchers.IO) {
+            dataStoreRepository.saveBackOnline(backOnline)
+        }
+
+    }
 
     fun saveMealAndDietType(mealType: String, mealTypedId: Int, diet: String, dietId: Int) =
         viewModelScope.launch(Dispatchers.IO) {
@@ -58,7 +67,14 @@ class recipesViewModel @Inject constructor(
 
     fun showNetworkStatus() {
         if (!network) {
+
             Toast.makeText(getApplication(), "No Internet", Toast.LENGTH_SHORT).show()
+            saveBackOnline(true)
+        }else if(network){
+            if(backOnline.value == true){
+                Toast.makeText(getApplication(), "We are back to Internet", Toast.LENGTH_SHORT).show()
+                saveBackOnline(false)
+            }
         }
     }
 }

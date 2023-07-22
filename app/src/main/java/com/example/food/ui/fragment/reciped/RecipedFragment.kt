@@ -4,8 +4,11 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
@@ -28,7 +31,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 @ExperimentalCoroutinesApi
-class recipedFragment : Fragment() {
+class recipedFragment : Fragment(),SearchView.OnQueryTextListener {
 
 
     val args by navArgs<recipedFragmentArgs>()
@@ -60,10 +63,15 @@ class recipedFragment : Fragment() {
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         recipesViewModell = ViewModelProvider(requireActivity()).get(recipesViewModel::class.java)
 
+        setHasOptionsMenu(true)
         binding.mainViewModel = mainViewModel
         initRacy()
         requestApiData()
-        readDatabase()
+
+
+        recipesViewModell.backOnline.observe(viewLifecycleOwner) {
+//            recipesViewModell.backOnline = it
+        }
 
         lifecycleScope.launch {
             networkListener = NetworkListener()
@@ -73,6 +81,9 @@ class recipedFragment : Fragment() {
                         Log.e("network listener", status.toString())
                         recipesViewModell.network = status
                         recipesViewModell.showNetworkStatus()
+                        readDatabase()
+
+
                     }
                 }
         }
@@ -89,7 +100,23 @@ class recipedFragment : Fragment() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+inflater.inflate(R.menu.recipes_menu,menu)
+        val search=menu.findItem(R.id.menu_search)
+        val searchView=search.actionView as? SearchView
+        searchView?.isSubmitButtonEnabled=true
+        searchView?.setOnQueryTextListener(this)
+    }
+    override fun onQueryTextSubmit(p0: String?): Boolean {
+     return true
+    }
+
+    override fun onQueryTextChange(p0: String?): Boolean {
+        return true
+
+    }
+
+
     private fun readDatabase() {
         lifecycleScope.launch {
             mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { data ->
@@ -157,5 +184,6 @@ if(data.isNotEmpty()){
         super.onDestroyView()
         _binding = null
     }
+
 
 }

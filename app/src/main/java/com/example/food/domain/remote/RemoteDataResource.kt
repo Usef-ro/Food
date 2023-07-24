@@ -15,4 +15,9 @@ class RemoteDataResource @Inject constructor(
         Log.e("RemoteDataResource ", "" + iFood.getRecpes(queryMap))
         return iFood.getRecpes(queryMap)
     }
+
+
+    suspend fun searchRecipes(queryMap: Map<String, String>): Response<foodRecipe>{
+        return iFood.searchRecipes(queryMap)
+    }
 }

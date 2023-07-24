@@ -14,6 +14,7 @@ object constants {
     const val RECIPES_TABLE = "recipes_table"
 
     // DATA QUERY RECIPES
+    const val QUERY_SEARCH = "query"
     const val QUERY_NUMBER = "number"
     const val QUERY_TYPE = "type"
     const val QUERY_DIET = "diet"

@@ -15,6 +15,7 @@ import com.example.food.util.constants.QUERY_API
 import com.example.food.util.constants.QUERY_DIET
 import com.example.food.util.constants.QUERY_INFORMATION
 import com.example.food.util.constants.QUERY_NUMBER
+import com.example.food.util.constants.QUERY_SEARCH
 import com.example.food.util.constants.QUERY_TYPE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -65,6 +66,17 @@ class recipesViewModel @Inject constructor(
         return query
     }
 
+    fun applySearchQuery(search:String):HashMap<String,String>{
+        val query:HashMap<String,String> =HashMap()
+        query[QUERY_SEARCH]=search
+        query[QUERY_NUMBER] = DEFAULT_MEAL_NUMBER
+        query[QUERY_TYPE] =  dietType
+        query[QUERY_DIET] = mealType
+        query[QUERY_API] = API_KEY
+        query[QUERY_INFORMATION] = "true"
+
+        return query
+    }
     fun showNetworkStatus() {
         if (!network) {
 

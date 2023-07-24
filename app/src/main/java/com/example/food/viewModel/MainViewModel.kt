@@ -3,6 +3,7 @@ package com.example.food.viewModel
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.Network
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
@@ -37,8 +38,35 @@ constructor(
 
     var recipesResponse: MutableLiveData<NetworkResult<foodRecipe>> = MutableLiveData()
 
+    val searchResponse:MutableLiveData<NetworkResult<foodRecipe>> =MutableLiveData()
+
     fun getRecipes(queryMap: Map<String, String>) = viewModelScope.launch {
         getRecipesSafeCall(queryMap)
+    }
+
+
+    fun searchRecipes(queryMap: Map<String, String>)=viewModelScope.launch {
+        searchRecipesSafeCall(queryMap)
+    }
+
+    private suspend fun searchRecipesSafeCall(queryMap: Map<String, String>) {
+        searchResponse.value = NetworkResult.Loading()
+
+        if (hasInternetConnection()) {
+
+            try {
+                val response = repository.remote.searchRecipes(queryMap)
+                searchResponse.value = handleFoodRecipesResponse(response)
+
+
+            } catch (e: Exception) {
+                Log.e("getRecipesSafeCall ", "" + e.message)
+                searchResponse.value = NetworkResult.Error("Recipes not Found")
+            }
+        } else {
+
+            searchResponse.value = NetworkResult.Error("No Internet Connection")
+        }
     }
 
     private suspend fun getRecipesSafeCall(queryMap: Map<String, String>) {

@@ -8,9 +8,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 @ExperimentalCoroutinesApi
-class recipedFragment : Fragment(),SearchView.OnQueryTextListener {
+class recipedFragment : Fragment(), SearchView.OnQueryTextListener {
 
 
     val args by navArgs<recipedFragmentArgs>()
@@ -107,8 +107,13 @@ inflater.inflate(R.menu.recipes_menu,menu)
         searchView?.isSubmitButtonEnabled=true
         searchView?.setOnQueryTextListener(this)
     }
-    override fun onQueryTextSubmit(p0: String?): Boolean {
-     return true
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if(query != null){
+            searchApiData(query)
+        }
+
+
+        return true
     }
 
     override fun onQueryTextChange(p0: String?): Boolean {
@@ -130,6 +135,29 @@ inflater.inflate(R.menu.recipes_menu,menu)
         }
     }
 
+    fun searchApiData(search:String) {
+        showShimmer()
+        mainViewModel.searchRecipes(recipesViewModell.applySearchQuery(search))
+        mainViewModel.searchResponse.observe(viewLifecycleOwner,{result ->
+            when(result){
+                is NetworkResult.Success->{
+                    hideShimmer()
+                    val foodRec=result.data
+                    foodRec?.let { mAdapter.setData(it) }
+                }
+                is NetworkResult.Error->{
+                    hideShimmer()
+                    loadDataFromCache()
+                    Toast.makeText(requireContext(),result.message.toString(),Toast.LENGTH_SHORT).show()
+
+
+                }
+                is NetworkResult.Loading->{
+                    showShimmer()
+                }
+            }
+        })
+    }
     fun loadDataFromCache() {
         lifecycleScope.launch {
             mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { data ->

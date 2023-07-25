@@ -3,14 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.food">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".app"
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_base"
@@ -18,7 +16,13 @@
         android:roundIcon="@mipmap/ic_base"
         android:supportsRtl="true"
         android:theme="@style/Theme.Food"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.activity.DetailActivity"
+            android:label="Details"
+            android:theme="@style/DetailActivityStyle"
+            android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">

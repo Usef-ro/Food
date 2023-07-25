@@ -25,6 +25,9 @@
             android:name="backToHome"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_recipedFragment_to_detailActivity"
+            app:destination="@id/detailActivity" />
     </fragment>
     <fragment
         android:id="@+id/foodFragment"
@@ -44,4 +47,13 @@
             android:id="@+id/action_blankBottomSheet_to_recipedFragment2"
             app:destination="@id/recipedFragment" />
     </dialog>
+    <activity
+        android:id="@+id/detailActivity"
+        android:name="com.example.food.ui.activity.DetailActivity"
+        android:label="Detail"
+        tools:layout="@layout/activity_detail" >
+        <argument
+            android:name="result"
+            app:argType="com.example.food.domain.model.Result" />
+    </activity>
 </navigation>

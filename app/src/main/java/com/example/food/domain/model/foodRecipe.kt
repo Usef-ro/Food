@@ -1,6 +1,9 @@
 package com.example.food.domain.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 
 
 data class foodRecipe(
@@ -11,11 +14,12 @@ data class foodRecipe(
     val totalResults: Int
 )
 
+@Parcelize
 data class Result(
     @SerializedName("aggregateLikes")
     val aggregateLikes: Int,
     @SerializedName("analyzedInstructions")
-    val analyzedInstructions: List<AnalyzedInstruction>,
+    val analyzedInstructions:@RawValue List<AnalyzedInstruction>,
     @SerializedName("cheap")
     val cheap: Boolean,
     @SerializedName("cookingMinutes")
@@ -23,7 +27,7 @@ data class Result(
     @SerializedName("creditsText")
     val creditsText: String,
     @SerializedName("cuisines")
-    val cuisines: List<Any>,
+    val cuisines:@RawValue List<Any>,
     @SerializedName("dairyFree")
     val dairyFree: Boolean,
     @SerializedName("diets")
@@ -45,7 +49,7 @@ data class Result(
     @SerializedName("lowFodmap")
     val lowFodmap: Boolean,
     @SerializedName("occasions")
-    val occasions: List<Any>,
+    val occasions:@RawValue List<Any>,
     @SerializedName("preparationMinutes")
     val preparationMinutes: Int,
     @SerializedName("pricePerServing")
@@ -76,15 +80,15 @@ data class Result(
     val veryPopular: Boolean,
     @SerializedName("weightWatcherSmartPoints")
     val weightWatcherSmartPoints: Int
-)
-
+):Parcelable
+@Parcelize
 data class AnalyzedInstruction(
     @SerializedName("name")
     val name: String,
     @SerializedName("steps")
     val steps: List<Step>
-)
-
+):Parcelable
+@Parcelize
 data class Step(
     @SerializedName("equipment")
     val equipment: List<Equipment>,
@@ -96,8 +100,8 @@ data class Step(
     val number: Int,
     @SerializedName("step")
     val step: String
-)
-
+):Parcelable
+@Parcelize
 data class Equipment(
     @SerializedName("id")
     val id: Int,
@@ -107,8 +111,8 @@ data class Equipment(
     val localizedName: String,
     @SerializedName("name")
     val name: String
-)
-
+):Parcelable
+@Parcelize
 data class Ingredient(
     @SerializedName("id")
     val id: Int,
@@ -118,11 +122,11 @@ data class Ingredient(
     val localizedName: String,
     @SerializedName("name")
     val name: String
-)
-
+):Parcelable
+@Parcelize
 data class Length(
     @SerializedName("number")
     val number: Int,
     @SerializedName("unit")
     val unit: String
-)
+):Parcelable

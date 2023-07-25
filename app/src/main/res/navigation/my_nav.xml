@@ -37,7 +37,7 @@
     </fragment>
     <dialog
         android:id="@+id/blankBottomSheet"
-        android:name="com.example.food.ui.fragment.reciped.BlankBottomSheet"
+        android:name="com.example.food.ui.fragment.reciped.BottomSheet"
         android:label="fragment_blank_bottom_sheet"
         tools:layout="@layout/fragment_blank_bottom_sheet" >
         <action

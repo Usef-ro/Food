@@ -6,7 +6,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.food.domain.database.DataStoreRepository
-import com.example.food.util.constants
 import com.example.food.util.constants.API_KEY
 import com.example.food.util.constants.DEFAULT_DIET_TYPE
 import com.example.food.util.constants.DEFAULT_MEAL_NUMBER
@@ -30,11 +29,12 @@ class recipesViewModel @Inject constructor(
 
     private var mealType = DEFAULT_MEAL_TYPE
     private var dietType = DEFAULT_DIET_TYPE
+    var backOnline=false
 
     var network = false
     val readMealAndDietType = dataStoreRepository.readMealAndDietType
-    var backOnline=dataStoreRepository.readBackOnline.asLiveData()
-    fun saveBackOnline(backOnline:Boolean){
+    var readBackOnline = dataStoreRepository.readBackOnline.asLiveData()
+    fun saveBackOnline(backOnline: Boolean) {
 
         viewModelScope.launch(Dispatchers.IO) {
             dataStoreRepository.saveBackOnline(backOnline)
@@ -58,7 +58,7 @@ class recipesViewModel @Inject constructor(
         }
 
         query[QUERY_NUMBER] = DEFAULT_MEAL_NUMBER
-        query[QUERY_TYPE] =  dietType
+        query[QUERY_TYPE] = dietType
         query[QUERY_DIET] = mealType
         query[QUERY_API] = API_KEY
         query[QUERY_INFORMATION] = "true"
@@ -66,27 +66,31 @@ class recipesViewModel @Inject constructor(
         return query
     }
 
-    fun applySearchQuery(search:String):HashMap<String,String>{
-        val query:HashMap<String,String> =HashMap()
-        query[QUERY_SEARCH]=search
+    fun applySearchQuery(search: String): HashMap<String, String> {
+        val query: HashMap<String, String> = HashMap()
+        query[QUERY_SEARCH] = search
         query[QUERY_NUMBER] = DEFAULT_MEAL_NUMBER
-        query[QUERY_TYPE] =  dietType
+        query[QUERY_TYPE] = dietType
         query[QUERY_DIET] = mealType
         query[QUERY_API] = API_KEY
         query[QUERY_INFORMATION] = "true"
 
         return query
     }
+
     fun showNetworkStatus() {
         if (!network) {
 
             Toast.makeText(getApplication(), "No Internet", Toast.LENGTH_SHORT).show()
             saveBackOnline(true)
-        }else if(network){
-            if(backOnline.value == true){
-                Toast.makeText(getApplication(), "We are back to Internet", Toast.LENGTH_SHORT).show()
+        } else if (network) {
+            if (backOnline) {
+
+                Toast.makeText(getApplication(), "We are back to Internet", Toast.LENGTH_SHORT)
+                    .show()
                 saveBackOnline(false)
             }
+
         }
     }
 }

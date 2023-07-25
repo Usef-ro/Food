@@ -1,6 +1,5 @@
 package com.example.food.ui.fragment.reciped
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +8,6 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -69,15 +67,20 @@ class recipedFragment : Fragment(), SearchView.OnQueryTextListener {
         requestApiData()
 
 
-        recipesViewModell.backOnline.observe(viewLifecycleOwner) {
-//            recipesViewModell.backOnline = it
+
+
+        // ERROR
+        recipesViewModell.readBackOnline.observe(viewLifecycleOwner) { it->
+
+            recipesViewModell.backOnline=it
+
         }
 
         lifecycleScope.launch {
             networkListener = NetworkListener()
             networkListener.checkNetworkAvailability(requireContext())
                 .collect { status ->
-                    {
+                    run {
                         Log.e("network listener", status.toString())
                         recipesViewModell.network = status
                         recipesViewModell.showNetworkStatus()
@@ -183,7 +186,6 @@ if(data.isNotEmpty()){
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     fun requestApiData() {
         mainViewModel.getRecipes(recipesViewModell.applyQueries())
         mainViewModel.recipesResponse.observe(viewLifecycleOwner) { res ->

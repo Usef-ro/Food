@@ -29,7 +29,7 @@ class recipesViewModel @Inject constructor(
 
     private var mealType = DEFAULT_MEAL_TYPE
     private var dietType = DEFAULT_DIET_TYPE
-    var backOnline=false
+    var backOnline = false
 
     var network = false
     val readMealAndDietType = dataStoreRepository.readMealAndDietType

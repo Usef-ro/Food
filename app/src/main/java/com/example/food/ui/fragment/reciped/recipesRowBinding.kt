@@ -11,22 +11,27 @@ import androidx.navigation.findNavController
 import coil.load
 import com.example.food.R
 import com.example.food.domain.model.Result
+
 class recipesRowBinding {
 
     companion object {
 
         @BindingAdapter("onRecipesClickListener")
         @JvmStatic
-        fun onRecipeClickListener(recipeRowLLayou:ConstraintLayout,result:Result){
-        recipeRowLLayou.setOnClickListener{
-            try{
-//                val action=BottomSheetDirections.find/
-                recipeRowLLayou.findNavController().navigate(R.id.action_recipedFragment_to_detailActivity)
-            }   catch(e:Exception){
-                Log.e("recipesRowBinding = > onRecipeClickListener",""+e.message)
+        fun onRecipeClickListener(recipeRowLLayou: ConstraintLayout, result: Result) {
+
+            Log.e("onRecipeClickListener", "" + result)
+            recipeRowLLayou.setOnClickListener {
+                try {
+
+                    recipeRowLLayou.findNavController()
+                        .navigate(R.id.action_recipedFragment_to_detailActivity)
+                } catch (e: Exception) {
+                    Log.e("recipesRowBinding = > onRecipeClickListener", "" + e.message)
+                }
             }
         }
-        }
+
         @BindingAdapter("loadImage")
         @JvmStatic
         fun loadImage(imageView: ImageView, url: String) {

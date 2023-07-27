@@ -19,7 +19,7 @@ data class Result(
     @SerializedName("aggregateLikes")
     val aggregateLikes: Int,
     @SerializedName("analyzedInstructions")
-    val analyzedInstructions:@RawValue List<AnalyzedInstruction>,
+    val analyzedInstructions: @RawValue List<AnalyzedInstruction>,
     @SerializedName("cheap")
     val cheap: Boolean,
     @SerializedName("cookingMinutes")
@@ -27,7 +27,7 @@ data class Result(
     @SerializedName("creditsText")
     val creditsText: String,
     @SerializedName("cuisines")
-    val cuisines:@RawValue List<Any>,
+    val cuisines: @RawValue List<Any>,
     @SerializedName("dairyFree")
     val dairyFree: Boolean,
     @SerializedName("diets")
@@ -49,7 +49,7 @@ data class Result(
     @SerializedName("lowFodmap")
     val lowFodmap: Boolean,
     @SerializedName("occasions")
-    val occasions:@RawValue List<Any>,
+    val occasions: @RawValue List<Any>,
     @SerializedName("preparationMinutes")
     val preparationMinutes: Int,
     @SerializedName("pricePerServing")
@@ -80,14 +80,16 @@ data class Result(
     val veryPopular: Boolean,
     @SerializedName("weightWatcherSmartPoints")
     val weightWatcherSmartPoints: Int
-):Parcelable
+) : Parcelable
+
 @Parcelize
 data class AnalyzedInstruction(
     @SerializedName("name")
     val name: String,
     @SerializedName("steps")
     val steps: List<Step>
-):Parcelable
+) : Parcelable
+
 @Parcelize
 data class Step(
     @SerializedName("equipment")
@@ -100,7 +102,8 @@ data class Step(
     val number: Int,
     @SerializedName("step")
     val step: String
-):Parcelable
+) : Parcelable
+
 @Parcelize
 data class Equipment(
     @SerializedName("id")
@@ -111,7 +114,8 @@ data class Equipment(
     val localizedName: String,
     @SerializedName("name")
     val name: String
-):Parcelable
+) : Parcelable
+
 @Parcelize
 data class Ingredient(
     @SerializedName("id")
@@ -122,11 +126,12 @@ data class Ingredient(
     val localizedName: String,
     @SerializedName("name")
     val name: String
-):Parcelable
+) : Parcelable
+
 @Parcelize
 data class Length(
     @SerializedName("number")
     val number: Int,
     @SerializedName("unit")
     val unit: String
-):Parcelable
+) : Parcelable

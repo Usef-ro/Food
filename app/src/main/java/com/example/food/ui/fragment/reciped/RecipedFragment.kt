@@ -43,15 +43,10 @@ class recipedFragment : Fragment(), SearchView.OnQueryTextListener {
     private var _binding: FragmentRecipedBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         // Inflate the layout for this fragment
         _binding = FragmentRecipedBinding.inflate(inflater, container, false)
@@ -67,12 +62,10 @@ class recipedFragment : Fragment(), SearchView.OnQueryTextListener {
         requestApiData()
 
 
-
-
         // ERROR
-        recipesViewModell.readBackOnline.observe(viewLifecycleOwner) { it->
+        recipesViewModell.readBackOnline.observe(viewLifecycleOwner) { it ->
 
-            recipesViewModell.backOnline=it
+            recipesViewModell.backOnline = it
 
         }
 
@@ -104,14 +97,15 @@ class recipedFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-inflater.inflate(R.menu.recipes_menu,menu)
-        val search=menu.findItem(R.id.menu_search)
-        val searchView=search.actionView as? SearchView
-        searchView?.isSubmitButtonEnabled=true
+        inflater.inflate(R.menu.recipes_menu, menu)
+        val search = menu.findItem(R.id.menu_search)
+        val searchView = search.actionView as? SearchView
+        searchView?.isSubmitButtonEnabled = true
         searchView?.setOnQueryTextListener(this)
     }
+
     override fun onQueryTextSubmit(query: String?): Boolean {
-        if(query != null){
+        if (query != null) {
             searchApiData(query)
         }
 
@@ -138,35 +132,39 @@ inflater.inflate(R.menu.recipes_menu,menu)
         }
     }
 
-    fun searchApiData(search:String) {
+    fun searchApiData(search: String) {
         showShimmer()
         mainViewModel.searchRecipes(recipesViewModell.applySearchQuery(search))
-        mainViewModel.searchResponse.observe(viewLifecycleOwner,{result ->
-            when(result){
-                is NetworkResult.Success->{
+        mainViewModel.searchResponse.observe(viewLifecycleOwner, { result ->
+            when (result) {
+                is NetworkResult.Success -> {
                     hideShimmer()
-                    val foodRec=result.data
+                    val foodRec = result.data
                     foodRec?.let { mAdapter.setData(it) }
                 }
-                is NetworkResult.Error->{
+
+                is NetworkResult.Error -> {
                     hideShimmer()
                     loadDataFromCache()
-                    Toast.makeText(requireContext(),result.message.toString(),Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), result.message.toString(), Toast.LENGTH_SHORT)
+                        .show()
 
 
                 }
-                is NetworkResult.Loading->{
+
+                is NetworkResult.Loading -> {
                     showShimmer()
                 }
             }
         })
     }
+
     fun loadDataFromCache() {
         lifecycleScope.launch {
             mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { data ->
-if(data.isNotEmpty()){
-    mAdapter.setData(data[0].foodRecipe)
-}
+                if (data.isNotEmpty()) {
+                    mAdapter.setData(data[0].foodRecipe)
+                }
             }
         }
     }

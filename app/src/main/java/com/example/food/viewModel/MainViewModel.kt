@@ -3,11 +3,8 @@ package com.example.food.viewModel
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.Network
 import android.net.NetworkCapabilities
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -38,14 +35,14 @@ constructor(
 
     var recipesResponse: MutableLiveData<NetworkResult<foodRecipe>> = MutableLiveData()
 
-    val searchResponse:MutableLiveData<NetworkResult<foodRecipe>> =MutableLiveData()
+    val searchResponse: MutableLiveData<NetworkResult<foodRecipe>> = MutableLiveData()
 
     fun getRecipes(queryMap: Map<String, String>) = viewModelScope.launch {
         getRecipesSafeCall(queryMap)
     }
 
 
-    fun searchRecipes(queryMap: Map<String, String>)=viewModelScope.launch {
+    fun searchRecipes(queryMap: Map<String, String>) = viewModelScope.launch {
         searchRecipesSafeCall(queryMap)
     }
 

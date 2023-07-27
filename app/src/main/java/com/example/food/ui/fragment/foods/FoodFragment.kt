@@ -16,11 +16,6 @@ private const val ARG_PARAM2 = "param2"
 class foodFragment : Fragment() {
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

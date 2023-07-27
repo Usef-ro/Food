@@ -8,9 +8,7 @@ import com.example.food.databinding.ItemRecipBinding
 import com.example.food.domain.model.foodRecipe
 import com.example.food.util.RecipesDiffUtil
 
-class adapterRecipe(
-
-) : RecyclerView.Adapter<adapterRecipe.viewHolder>() {
+class adapterRecipe : RecyclerView.Adapter<adapterRecipe.viewHolder>() {
 
     var recipe = emptyList<com.example.food.domain.model.Result>()
 
@@ -32,11 +30,11 @@ class adapterRecipe(
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): adapterRecipe.viewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
         return viewHolder.from(parent)
     }
 
-    override fun onBindViewHolder(holder: adapterRecipe.viewHolder, position: Int) {
+    override fun onBindViewHolder(holder: viewHolder, position: Int) {
         val currentResult = recipe[position]
 
         holder.bind(currentResult)

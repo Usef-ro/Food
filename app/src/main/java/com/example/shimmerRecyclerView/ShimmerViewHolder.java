@@ -36,7 +36,7 @@ final class ShimmerViewHolder extends RecyclerView.ViewHolder {
     /**
      * Updates shimmer properties
      */
-    final void bindView(Shimmer shimmer) {
+    void bindView(Shimmer shimmer) {
         mShimmer.setShimmer(shimmer).startShimmer();
     }
 }

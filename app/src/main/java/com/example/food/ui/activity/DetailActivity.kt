@@ -39,7 +39,7 @@ class DetailActivity : AppCompatActivity() {
 
 
         val resultBundle = Bundle()
-        resultBundle.putParcelable("result", args.result)
+        resultBundle.putParcelable("recipeBundle", args.result)
 
 
         val adapter = com.example.food.ui.adapter.PagerAdapter(

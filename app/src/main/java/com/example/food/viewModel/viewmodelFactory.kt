@@ -1,9 +1,6 @@
 package com.example.food.viewModel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.food.app
 
-class viewmodelFactory(app: app) : ViewModelProvider.AndroidViewModelFactory(app) {
-
-}
+class viewmodelFactory(app: app) : ViewModelProvider.AndroidViewModelFactory(app)

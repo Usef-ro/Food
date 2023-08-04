@@ -150,7 +150,7 @@ public final class ShimmerRecyclerView extends RecyclerView {
     /**
      * Start showing shimmer loading.
      */
-    public final void showShimmer() {
+    public void showShimmer() {
         if (mShimmerLayoutManager == null) {
             initializeLayoutManager();
         }
@@ -165,7 +165,7 @@ public final class ShimmerRecyclerView extends RecyclerView {
     /**
      * Stop showing shimmer loading and setup
      */
-    public final void hideShimmer() {
+    public void hideShimmer() {
         setLayoutManager(mLayoutManager);
         setAdapter(getActualAdapter());
 
@@ -184,14 +184,14 @@ public final class ShimmerRecyclerView extends RecyclerView {
         setLayoutManager(manager);
     }
 
-    public final boolean isShimmerShowing() {
+    public boolean isShimmerShowing() {
         return isShimmerShowing;
     }
 
     /**
      * @param layout layout reference for shimmer adapter.
      */
-    public final void setShimmerLayout(@LayoutRes int layout) {
+    public void setShimmerLayout(@LayoutRes int layout) {
         this.mShimmerLayout = layout;
     }
 
@@ -199,35 +199,35 @@ public final class ShimmerRecyclerView extends RecyclerView {
      * @return layout reference used as shimmer layout.
      */
     @LayoutRes
-    public final int getShimmerLayout() {
+    public int getShimmerLayout() {
         return mShimmerLayout;
     }
 
     /**
      * @param count Number of items to be shown in shimmer adapter.
      */
-    public final void setShimmerItemCount(int count) {
+    public void setShimmerItemCount(int count) {
         this.mShimmerItemCount = count;
     }
 
     /**
      * @return number of items shown in shimmer adapter.
      */
-    public final int getShimmerItemCount() {
+    public int getShimmerItemCount() {
         return mShimmerItemCount;
     }
 
     /**
      * @param manager Shimmer {@link LayoutManager}
      */
-    public final void setShimmerLayoutManager(@NonNull LayoutManager manager) {
+    public void setShimmerLayoutManager(@NonNull LayoutManager manager) {
         this.mShimmerLayoutManager = manager;
     }
 
     /**
      * @return {@link LayoutManager} used for shimmer adapter.
      */
-    public final LayoutManager getShimmerLayoutManager() {
+    public LayoutManager getShimmerLayoutManager() {
         return mShimmerLayoutManager;
     }
 
@@ -236,21 +236,21 @@ public final class ShimmerRecyclerView extends RecyclerView {
      *
      * @param shimmer other required Shimmer properties.
      */
-    public final void setShimmer(Shimmer shimmer) {
+    public void setShimmer(Shimmer shimmer) {
         this.shimmer = shimmer;
     }
 
     /**
      * @return current {@link Shimmer}
      */
-    public final Shimmer getShimmer() {
+    public Shimmer getShimmer() {
         return shimmer;
     }
 
     /**
      * @return Shimmer adapter
      */
-    public final ShimmerAdapter getShimmerAdapter() {
+    public ShimmerAdapter getShimmerAdapter() {
         if (mShimmerAdapter == null)
             mShimmerAdapter = new ShimmerAdapter(mShimmerLayout, mShimmerItemCount, mLayoutType,
                     mItemViewType, shimmer, mLayoutOrientation);
@@ -260,7 +260,7 @@ public final class ShimmerRecyclerView extends RecyclerView {
     /**
      * @return Actual adapter
      */
-    public final Adapter getActualAdapter() {
+    public Adapter getActualAdapter() {
         return mActualAdapter;
     }
 
@@ -269,7 +269,7 @@ public final class ShimmerRecyclerView extends RecyclerView {
      *
      * @param itemViewType a contract with {@link ShimmerAdapter}.
      */
-    public final void setItemViewType(ItemViewType itemViewType) {
+    public void setItemViewType(ItemViewType itemViewType) {
         this.mItemViewType = itemViewType;
     }
 

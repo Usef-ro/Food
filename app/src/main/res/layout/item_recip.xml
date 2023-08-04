@@ -34,27 +34,27 @@
 
                 <TextView
                     android:id="@+id/textView_like"
+                    setNumberofLikes="@{result.aggregateLikes}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="7dp"
+                    android:layout_marginBottom="16dp"
                     android:text="TextView"
-                    setNumberofLikes="@{result.aggregateLikes}"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/textView_time"
-                    app:layout_constraintStart_toEndOf="@+id/imageView_item_rep"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView_like" />
+                    app:layout_constraintStart_toEndOf="@+id/imageView_item_rep" />
 
                 <TextView
                     android:id="@+id/textView_leaf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="14dp"
+                    android:layout_marginBottom="16dp"
                     android:text="TextView"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView_time"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView_leaf" />
+                    app:layout_constraintStart_toEndOf="@+id/textView_time" />
 
                 <ImageView
                     android:id="@+id/imageView_item_rep"
@@ -74,6 +74,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:ellipsize="end"
+                    android:layout_marginEnd="5dp"
                     android:maxLines="2"
                     android:text="@{result.title}"
                     android:textColor="@color/black"
@@ -88,9 +89,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="5dp"
                     android:ellipsize="end"
-                    android:maxLines="3"
-                    android:text="@{result.summary}"
+                    android:maxLines="1"
+                    parseHtml="@{result.summary}"
                     app:layout_constraintEnd_toEndOf="@+id/textView_title"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/imageView_item_rep"
@@ -100,50 +102,45 @@
                     android:id="@+id/imageView_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="35dp"
+                    android:layout_marginBottom="4dp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView_like"
                     app:layout_constraintEnd_toStartOf="@+id/imageView_time"
                     app:layout_constraintStart_toEndOf="@+id/imageView_item_rep"
-                    app:layout_constraintTop_toBottomOf="@+id/textView2_title"
                     app:srcCompat="@drawable/baseline_favorite_24" />
 
                 <ImageView
                     android:id="@+id/imageView_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="41dp"
-                    android:layout_marginEnd="36dp"
+                    android:layout_marginBottom="24dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView_time"
                     app:layout_constraintEnd_toStartOf="@+id/imageView_leaf"
                     app:layout_constraintStart_toEndOf="@+id/imageView_like"
-                    app:layout_constraintTop_toBottomOf="@+id/textView_title"
                     app:srcCompat="@drawable/baseline_access_time_24" />
 
                 <ImageView
                     android:id="@+id/imageView_leaf"
+                    applyVeganColor="@{result.vegan}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="84dp"
-                    android:layout_marginEnd="52dp"
-                    applyVeganColor="@{result.vegan}"
+                    android:layout_marginBottom="4dp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView_leaf"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView_time"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/baseline_energy_savings_leaf_24" />
 
                 <TextView
                     android:id="@+id/textView_time"
+                    setNumberOfMinutes="@{result.readyInMinutes}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="12dp"
+                    android:layout_marginBottom="16dp"
                     android:text="TextView"
-                    setNumberOfMinutes="@{result.readyInMinutes}"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/textView_leaf"
-                    app:layout_constraintStart_toEndOf="@+id/textView_like"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView_time" />
+                    app:layout_constraintStart_toEndOf="@+id/textView_like" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

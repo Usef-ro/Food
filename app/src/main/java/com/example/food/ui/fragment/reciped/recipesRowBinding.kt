@@ -10,6 +10,7 @@ import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import coil.load
 import com.example.food.R
+import com.example.food.R.id.action_recipedFragment_to_detailActivity
 import com.example.food.domain.model.Result
 
 class recipesRowBinding {
@@ -18,14 +19,14 @@ class recipesRowBinding {
 
         @BindingAdapter("onRecipesClickListener")
         @JvmStatic
-        fun onRecipeClickListener(recipeRowLLayou: ConstraintLayout, result: Result) {
+        fun onRecipeClickListener(recipeRowLayout: ConstraintLayout, result: Result) {
 
             Log.e("onRecipeClickListener", "" + result)
-            recipeRowLLayou.setOnClickListener {
+            recipeRowLayout.setOnClickListener {
                 try {
 
-                    recipeRowLLayou.findNavController()
-                        .navigate(R.id.action_recipedFragment_to_detailActivity)
+                    recipeRowLayout.findNavController()
+                        .navigate(action_recipedFragment_to_detailActivity)
                 } catch (e: Exception) {
                     Log.e("recipesRowBinding = > onRecipeClickListener", "" + e.message)
                 }
@@ -74,5 +75,17 @@ class recipesRowBinding {
                 }
             }
         }
+
+        @BindingAdapter("parseHtml")
+        @JvmStatic
+        fun parseHtml(textView: TextView, description: String?) {
+            if (description != null) {
+//        Json.parse(textView)
+                textView.text = description
+
+            }
+        }
     }
+
+
 }

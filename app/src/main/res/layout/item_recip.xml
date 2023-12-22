@@ -37,7 +37,7 @@
                     setNumberofLikes="@{result.aggregateLikes}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginEnd="7dp"
                     android:layout_marginBottom="16dp"
                     android:text="TextView"
@@ -78,7 +78,7 @@
                     android:maxLines="2"
                     android:text="@{result.title}"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/imageView_item_rep"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -102,9 +102,9 @@
                     android:id="@+id/imageView_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginBottom="4dp"
                     app:layout_constraintBottom_toTopOf="@+id/textView_like"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView_time"
                     app:layout_constraintStart_toEndOf="@+id/imageView_item_rep"
                     app:srcCompat="@drawable/baseline_favorite_24" />
 
@@ -123,10 +123,10 @@
                     applyVeganColor="@{result.vegan}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="28dp"
                     android:layout_marginBottom="4dp"
                     app:layout_constraintBottom_toTopOf="@+id/textView_leaf"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView_time"
                     app:srcCompat="@drawable/baseline_energy_savings_leaf_24" />
 
                 <TextView

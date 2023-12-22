@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
 class recipedFragment : Fragment(), SearchView.OnQueryTextListener {
 
 
+    val TAG = "recipedFragment"
     val args by navArgs<recipedFragmentArgs>()
 
     val mAdapter by lazy { adapterRecipe() }
@@ -43,6 +44,10 @@ class recipedFragment : Fragment(), SearchView.OnQueryTextListener {
     private var _binding: FragmentRecipedBinding? = null
     private val binding get() = _binding!!
 
+
+    /*
+    Create View
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,11 +58,16 @@ class recipedFragment : Fragment(), SearchView.OnQueryTextListener {
         val view = binding.root
         binding.lifecycleOwner = this
 
+        /*
+        init viewModel
+         */
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         recipesViewModell = ViewModelProvider(requireActivity()).get(recipesViewModel::class.java)
 
         setHasOptionsMenu(true)
         binding.mainViewModel = mainViewModel
+
+
         initRacy()
         requestApiData()
 
@@ -69,12 +79,13 @@ class recipedFragment : Fragment(), SearchView.OnQueryTextListener {
 
         }
 
+
         lifecycleScope.launch {
             networkListener = NetworkListener()
             networkListener.checkNetworkAvailability(requireContext())
                 .collect { status ->
                     run {
-                        Log.e("network listener", status.toString())
+                        Log.e("$TAG -> network listener", status.toString())
                         recipesViewModell.network = status
                         recipesViewModell.showNetworkStatus()
                         readDatabase()
@@ -84,6 +95,9 @@ class recipedFragment : Fragment(), SearchView.OnQueryTextListener {
                 }
         }
 
+        /*
+        Button Floating
+         */
         binding.btnFloating.setOnClickListener {
             if (recipesViewModell.network) {
                 findNavController().navigate(R.id.action_recipedFragment_to_blankBottomSheet2)
@@ -96,6 +110,9 @@ class recipedFragment : Fragment(), SearchView.OnQueryTextListener {
 
     }
 
+    /******************************************
+    Search
+     */
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.recipes_menu, menu)
         val search = menu.findItem(R.id.menu_search)
@@ -118,7 +135,13 @@ class recipedFragment : Fragment(), SearchView.OnQueryTextListener {
 
     }
 
+    /*
+        Search
+         *********************************************************/
 
+    /*
+    Read Data from Database
+     */
     private fun readDatabase() {
         lifecycleScope.launch {
             mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { data ->
@@ -135,7 +158,7 @@ class recipedFragment : Fragment(), SearchView.OnQueryTextListener {
     fun searchApiData(search: String) {
         showShimmer()
         mainViewModel.searchRecipes(recipesViewModell.applySearchQuery(search))
-        mainViewModel.searchResponse.observe(viewLifecycleOwner, { result ->
+        mainViewModel.searchResponse.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is NetworkResult.Success -> {
                     hideShimmer()
@@ -156,7 +179,7 @@ class recipedFragment : Fragment(), SearchView.OnQueryTextListener {
                     showShimmer()
                 }
             }
-        })
+        }
     }
 
     fun loadDataFromCache() {
@@ -167,21 +190,6 @@ class recipedFragment : Fragment(), SearchView.OnQueryTextListener {
                 }
             }
         }
-    }
-
-    private fun showShimmer() {
-        binding.shimmerRecyclerView.showShimmer()
-    }
-
-    private fun hideShimmer() {
-        binding.shimmerRecyclerView.hideShimmer()
-    }
-
-    private fun initRacy() {
-        binding.recyclerViewRecipes.hasFixedSize()
-        binding.recyclerViewRecipes.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerViewRecipes.adapter = mAdapter
-
     }
 
     fun requestApiData() {
@@ -208,6 +216,26 @@ class recipedFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
 
+    private fun showShimmer() {
+        binding.shimmerRecyclerView.showShimmer()
+    }
+
+    private fun hideShimmer() {
+        binding.shimmerRecyclerView.hideShimmer()
+    }
+
+    private fun initRacy() {
+        binding.recyclerViewRecipes.hasFixedSize()
+        binding.recyclerViewRecipes.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewRecipes.adapter = mAdapter
+
+    }
+
+
+
+    /*
+    OnDestroy
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

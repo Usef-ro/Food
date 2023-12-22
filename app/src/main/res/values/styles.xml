@@ -7,5 +7,8 @@
         <item name="chipBackgroundColor">@color/chip_baackground_color</item>
         <item name="android:textColor"> @color/chip_text_color</item>
         <item name="checkedIconTint">@color/chip_text_color</item>
+
+
+
     </style>
 </resources>

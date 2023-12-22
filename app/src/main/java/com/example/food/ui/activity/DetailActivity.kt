@@ -1,7 +1,10 @@
 package com.example.food.ui.activity
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -13,8 +16,10 @@ import com.example.food.ui.fragment.overView.InstructionFragment
 import com.example.food.ui.fragment.overView.OverViewFragment
 
 class DetailActivity : AppCompatActivity() {
-    private val args by navArgs<DetailActivityArgs>()
+    val TAG="DetailActivity"
+    private val args :DetailActivityArgs by navArgs()
     lateinit var binding: ActivityDetailBinding
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,19 +43,23 @@ class DetailActivity : AppCompatActivity() {
         title.add("Instruction")
 
 
-        val resultBundle = Bundle()
-        resultBundle.putParcelable("recipeBundle", args.result)
+//        val resultBundle = Bundle()
+//        resultBundle.putParcelable("recipeBundle", args.result)
 
+        var re=Bundle()
+        val k=re.getBundle("a")
+        Log.e(TAG, "bundle ${args.result}", )
+        Log.e(TAG, "bundle2 ${k}", )
 
-        val adapter = com.example.food.ui.adapter.PagerAdapter(
-            resultBundle,
-            fragment,
-            title,
-            supportFragmentManager
-        )
-
-        binding.viewPager.adapter = adapter
-        binding.tablayout.setupWithViewPager(binding.viewPager)
+//        val adapter = com.example.food.ui.adapter.PagerAdapter(
+//            resultBundle,
+//            fragment,
+//            title,
+//            supportFragmentManager
+//        )
+//
+//        binding.viewPager.adapter = adapter
+//        binding.tablayout.setupWithViewPager(binding.viewPager)
 
 
     }

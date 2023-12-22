@@ -8,12 +8,12 @@
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.example.food.ui.fragment.favorite.favoriteFragment"
-        android:label="fragment_favorite"
+        android:label="Favorite"
         tools:layout="@layout/fragment_favorite" />
     <fragment
         android:id="@+id/recipedFragment"
         android:name="com.example.food.ui.fragment.reciped.recipedFragment"
-        android:label="fragment_reciped"
+        android:label="Recipes"
         tools:layout="@layout/fragment_reciped" >
         <action
             android:id="@+id/action_recipedFragment_to_foodFragment"
@@ -28,11 +28,12 @@
         <action
             android:id="@+id/action_recipedFragment_to_detailActivity"
             app:destination="@id/detailActivity" />
+
     </fragment>
     <fragment
         android:id="@+id/foodFragment"
         android:name="com.example.food.ui.fragment.foods.foodFragment"
-        android:label="foodFragment"
+        android:label="Food"
         tools:layout="@layout/fragment_food" >
         <action
             android:id="@+id/action_foodFragment_to_favoriteFragment"
@@ -41,7 +42,7 @@
     <dialog
         android:id="@+id/blankBottomSheet"
         android:name="com.example.food.ui.fragment.reciped.BottomSheet"
-        android:label="fragment_blank_bottom_sheet"
+        android:label="BottomSheet"
         tools:layout="@layout/fragment_blank_bottom_sheet" >
         <action
             android:id="@+id/action_blankBottomSheet_to_recipedFragment2"
@@ -52,10 +53,13 @@
         android:name="com.example.food.ui.activity.DetailActivity"
         android:label="Detail"
         tools:layout="@layout/activity_detail" >
+
         <argument
+
             android:name="result"
-            app:nullable="true"
-            android:defaultValue="@null"
+
             app:argType="com.example.food.domain.model.Result" />
+
+
     </activity>
 </navigation>
